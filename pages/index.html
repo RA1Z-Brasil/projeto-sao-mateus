@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Agendamento</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-calendar-check"></i> Ra1z</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active"><i class="fas fa-home"></i> Painel</a></li>
+                <li><a href="cadastro.html"><i class="fas fa-plus-circle"></i> Nova Consulta</a></li>
+                <li><a href="medicos.html"><i class="fas fa-user-md"></i> Profissionais</a></li>
+                <li><a href="unidades.html"><i class="fas fa-hospital"></i> Unidades</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <span>Admin</span>
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="controls">
+            <div class="date-selector">
+                <button class="btn"><i class="fas fa-chevron-left"></i></button>
+                <h2>Semana de 05 a 11 de Junho</h2>
+                <button class="btn"><i class="fas fa-chevron-right"></i></button>
+            </div>
+            <div class="filter">
+                <select id="unidade-filter">
+                    <option value="">Todas as Unidades</option>
+                    <option value="1">Unidade Centro</option>
+                    <option value="2">Unidade Zona Sul</option>
+                </select>
+                <select id="medico-filter">
+                    <option value="">Todos os Médicos</option>
+                    <option value="1">Dr. Carlos Silva</option>
+                    <option value="2">Dra. Ana Oliveira</option>
+                </select>
+            </div>
+        </section>
+
+        <section class="schedule-grid">
+            <div class="grid-header">
+                <div class="time-column">Horário</div>
+                <div class="day-column">Segunda</div>
+                <div class="day-column">Terça</div>
+                <div class="day-column">Quarta</div>
+                <div class="day-column">Quinta</div>
+                <div class="day-column">Sexta</div>
+            </div>
+
+            <div class="grid-body">
+                <!-- Linha de horário 08:00 -->
+                <div class="grid-row">
+                    <div class="time-cell">08:00</div>
+                    <div class="day-cell">
+                        <div class="appointment" data-id="1">
+                            <span class="patient">Maria Souza</span>
+                            <span class="doctor">Dr. Carlos Silva</span>
+                            <span class="unit">Unidade Centro</span>
+                            <button class="cancel-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="day-cell"></div>
+                    <div class="day-cell">
+                        <div class="appointment" data-id="2">
+                            <span class="patient">João Santos</span>
+                            <span class="doctor">Dra. Ana Oliveira</span>
+                            <span class="unit">Unidade Zona Sul</span>
+                            <button class="cancel-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="day-cell"></div>
+                    <div class="day-cell"></div>
+                </div>
+
+                <!-- Linha de horário 09:00 -->
+                <div class="grid-row">
+                    <div class="time-cell">09:00</div>
+                    <div class="day-cell"></div>
+                    <div class="day-cell"></div>
+                    <div class="day-cell"></div>
+                    <div class="day-cell">
+                        <div class="appointment" data-id="3">
+                            <span class="patient">Ana Paula</span>
+                            <span class="doctor">Dr. Carlos Silva</span>
+                            <span class="unit">Unidade Centro</span>
+                            <button class="cancel-btn"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="day-cell"></div>
+                </div>
+
+                <!-- Mais linhas de horário podem ser adicionadas aqui -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal de Cancelamento -->
+    <div class="modal" id="cancel-modal">
+        <div class="modal-content">
+            <h3>Cancelar Consulta</h3>
+            <p>Tem certeza que deseja cancelar esta consulta?</p>
+            <div class="modal-buttons">
+                <button class="btn btn-cancel">Cancelar Ação</button>
+                <button class="btn btn-confirm">Confirmar Cancelamento</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

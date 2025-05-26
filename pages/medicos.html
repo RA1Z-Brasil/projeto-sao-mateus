@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Médicos</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1><i class="fas fa-calendar-check"></i> Profissionais
+            </h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html"><i class="fas fa-home"></i> Painel</a></li>
+                <li><a href="cadastro.html"><i class="fas fa-plus-circle"></i> Nova Consulta</a></li>
+                <li><a href="medicos.html" class="active"><i class="fas fa-user-md"></i> Profissionais</a></li>
+                <li><a href="unidades.html"><i class="fas fa-hospital"></i> Unidades</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <span>Admin</span>
+            <i class="fas fa-user-circle"></i>
+        </div>
+    </header>
+
+    <main>
+        <button class="btn btn-add"><i class="fas fa-plus"></i> Adicionar Profissionais</button>
+        
+        <div class="table-container">
+            <h2><i class="fas fa-user-md"></i> Profissionais Cadastrados</h2>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>CRM</th>
+                        <th>Especialidade</th>
+                        <th>Unidades</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Dr. Carlos Silva</td>
+                        <td>CRM/SP 123456</td>
+                        <td>Cardiologia</td>
+                        <td>Centro, Zona Sul</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dra. Ana Oliveira</td>
+                        <td>CRM/SP 654321</td>
+                        <td>Dermatologia</td>
+                        <td>Zona Sul</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Dr. Marcos Lima</td>
+                        <td>CRM/SP 789012</td>
+                        <td>Ortopedia</td>
+                        <td>Centro</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn btn-edit"><i class="fas fa-edit"></i></button>
+                                <button class="btn btn-delete"><i class="fas fa-trash"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Modal para adicionar/editar médico -->
+    <div class="modal" id="medico-modal">
+        <div class="modal-content">
+            <h3><i class="fas fa-user-md"></i> Cadastrar Médico</h3>
+            
+            <form id="medico-form">
+                <div class="form-group">
+                    <label for="medico-nome">Nome Completo</label>
+                    <input type="text" id="medico-nome" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medico-crm">CRM</label>
+                    <input type="text" id="medico-crm" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medico-especialidade">Especialidade</label>
+                    <input type="text" id="medico-especialidade" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="medico-unidades">Unidades de Atendimento</label>
+                    <select id="medico-unidades" multiple>
+                        <option value="1">Unidade Centro</option>
+                        <option value="2">Unidade Zona Sul</option>
+                    </select>
+                </div>
+                
+                <div class="modal-buttons">
+                    <button type="button" class="btn btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
