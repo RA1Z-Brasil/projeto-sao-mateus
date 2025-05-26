@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Médico</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Cadastro de Médico</h2>
+    <form id="medicoForm">
+      <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" class="form-control" name="nome" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">CRM</label>
+        <input type="text" class="form-control" name="crm" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Especialidade</label>
+        <input type="text" class="form-control" name="especialidade" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">IDs das Unidades (separados por vírgula)</label>
+        <input type="text" class="form-control" name="unidades_ids" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    const API_BASE = "https://2ppts9r5ke.execute-api.us-west-2.amazonaws.com/dev";
+    document.getElementById('medicoForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        nome: form.nome.value,
+        crm: form.crm.value,
+        especialidade: form.especialidade.value,
+        unidades_ids: form.unidades_ids.value.split(',').map(s => s.trim())
+      };
+      await fetch(${API_BASE}/lambda_cadastrar_medico, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert('Médico cadastrado com sucesso!');
+      form.reset();
+    });
+  </script>
+</body>
+</html>
