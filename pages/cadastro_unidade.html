@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastrar Unidade</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Cadastro de Unidade de Saúde</h2>
+    <form id="unidadeForm">
+      <div class="mb-3">
+        <label class="form-label">Nome</label>
+        <input type="text" class="form-control" name="nome" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Endereço</label>
+        <input type="text" class="form-control" name="endereco" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Telefone</label>
+        <input type="text" class="form-control" name="telefone" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Especialidades (separadas por vírgula)</label>
+        <input type="text" class="form-control" name="especialidades" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    const API_BASE = "https://2ppts9r5ke.execute-api.us-west-2.amazonaws.com/dev";
+    document.getElementById('unidadeForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        nome: form.nome.value,
+        endereco: form.endereco.value,
+        telefone: form.telefone.value,
+        especialidades: form.especialidades.value.split(',').map(s => s.trim())
+      };
+      await fetch(${API_BASE}/lambda_cadastrar_unidade, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      alert('Unidade cadastrada com sucesso!');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

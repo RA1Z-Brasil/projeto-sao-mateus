@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Agendamento de Consulta</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+  <div class="container py-5">
+    <h2 class="mb-4">Agendar Consulta</h2>
+    <form id="agendarForm" class="mb-5">
+      <div class="mb-3">
+        <label class="form-label">ID do Paciente</label>
+        <input type="text" class="form-control" name="paciente_id" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">ID do Médico</label>
+        <input type="text" class="form-control" name="medico_id" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">ID da Unidade</label>
+        <input type="text" class="form-control" name="unidade_id" required>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Início da Consulta (ex: 2025-05-28T14:00:00)</label>
+        <input type="datetime-local" class="form-control" name="inicio" required>
+      </div>
+      <button type="submit" class="btn btn-success">Agendar</button>
+    </form>
+
+    <h2 class="mb-4">Cancelar Consulta</h2>
+    <form id="cancelarForm">
+      <div class="mb-3">
+        <label class="form-label">ID da Consulta</label>
+        <input type="text" class="form-control" name="consulta_id" required>
+      </div>
+      <button type="submit" class="btn btn-danger">Cancelar</button>
+    </form>
+  </div>
+
+  <script>
+    const API_BASE = "https://2ppts9r5ke.execute-api.us-west-2.amazonaws.com/dev";
+
+    document.getElementById('agendarForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      const data = {
+        paciente_id: form.paciente_id.value,
+        medico_id: form.medico_id.value,
+        unidade_id: form.unidade_id.value,
+        inicio: form.inicio.value
+      };
+      const res = await fetch(`${API_BASE}/agendar-consulta`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const result = await res.json();
+      alert('Consulta agendada com sucesso! ID: ' + result.consulta_id);
+      form.reset();
+    });
+
+    document.getElementById('cancelarForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = e.target;
+      await fetch(`${API_BASE}/cancelar-consulta`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ consulta_id: form.consulta_id.value })
+      });
+      alert('Consulta cancelada com sucesso!');
+      form.reset();
+    });
+  </script>
+</body>
+</html>

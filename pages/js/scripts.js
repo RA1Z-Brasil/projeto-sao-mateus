@@ -1,5 +1,6 @@
 // Funções básicas para interação
 document.addEventListener('DOMContentLoaded', function() {
+    const API_BASE = "https://2ppts9r5ke.execute-api.us-west-2.amazonaws.com/dev";
     // Abrir modal de cancelamento
     const cancelButtons = document.querySelectorAll('.cancel-btn');
     cancelButtons.forEach(button => {
@@ -20,12 +21,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     // Confirmar cancelamento
-    document.querySelector('.btn-confirm').addEventListener('click', function() {
+    document.querySelector('.btn-confirm').addEventListener('click', async function() {
         const appointmentId = this.dataset.id;
-        // Aqui você faria uma requisição para o backend para cancelar a consulta
-        console.log(`Consulta ${appointmentId} cancelada`);
-        
-        // Fechar o modal e recarregar a página (simulação)
+        await fetch(`${API_BASE}/cancelar-consulta`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ consulta_id: appointmentId })
+        });
+
         document.getElementById('cancel-modal').style.display = 'none';
         alert('Consulta cancelada com sucesso!');
         // location.reload();
@@ -47,20 +50,41 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validação do formulário de consulta
     if (document.getElementById('consulta-form')) {
-        document.getElementById('consulta-form').addEventListener('submit', function(e) {
+        document.getElementById('consulta-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            // Aqui você faria a validação e envio para o backend
+            const form = e.target;
+            const data = {
+                paciente_id: form.paciente.value,
+                medico_id: form.medico.value,
+                unidade_id: form.unidade.value,
+                inicio: `${form.data.value}T${form.hora.value}`
+            };
+            await fetch(`${API_BASE}/agendar-consulta`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
             alert('Consulta agendada com sucesso!');
-            // this.reset();
+            // form.reset();
             // window.location.href = 'index.html';
         });
     }
     
     // Validação do formulário de médico
     if (document.getElementById('medico-form')) {
-        document.getElementById('medico-form').addEventListener('submit', function(e) {
+        document.getElementById('medico-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            // Aqui você faria a validação e envio para o backend
+            const data = {
+                nome: document.getElementById('medico-nome').value,
+                crm: document.getElementById('medico-crm').value,
+                especialidade: document.getElementById('medico-especialidade').value,
+                unidades_ids: Array.from(document.getElementById('medico-unidades').selectedOptions).map(o => o.value)
+            };
+            await fetch(`${API_BASE}/lambda_cadastrar_medico`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
             alert('Médico cadastrado com sucesso!');
             document.getElementById('medico-modal').style.display = 'none';
             // this.reset();
@@ -70,9 +94,19 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Validação do formulário de unidade
     if (document.getElementById('unidade-form')) {
-        document.getElementById('unidade-form').addEventListener('submit', function(e) {
+        document.getElementById('unidade-form').addEventListener('submit', async function(e) {
             e.preventDefault();
-            // Aqui você faria a validação e envio para o backend
+            const data = {
+                nome: document.getElementById('unidade-nome').value,
+                endereco: document.getElementById('unidade-endereco').value,
+                telefone: document.getElementById('unidade-telefone').value,
+                especialidades: Array.from(document.getElementById('unidade-especialidades').selectedOptions).map(o => o.value)
+            };
+            await fetch(`${API_BASE}/lambda_cadastrar_unidade`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
             alert('Unidade cadastrada com sucesso!');
             document.getElementById('unidade-modal').style.display = 'none';
             // this.reset();
